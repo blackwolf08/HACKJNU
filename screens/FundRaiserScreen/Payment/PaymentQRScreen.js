@@ -48,54 +48,35 @@ export default class App extends React.Component {
       scanned: true,
       loading: true
     });
-    let body = {
-      username: "darksun27",
-      mobile_number: "9810866770",
-      card_details: "5321532153215321",
-      amount: this.state.amount,
-      vendor_id: data
-    };
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    };
-    this.setState({ loading: false });
 
-    let res_history = await axios.post(
-      "https://sih-aai-payment.herokuapp.com/api/spend",
-      querystring.stringify(body),
-      config
+    console.log(type, data);
+
+    let res_history = await axios.get(
+      "https://stormy-reaches-07388.herokuapp.com/transaction?id=dfbsidfbiaubib282fiwsbdff&amount=" +
+        this.state.amount +
+        "200000"
     );
-    alert(`Payment Successfull`);
-    this.props.navigation.navigate("Wallet");
+    this.setState({ loading: false });
+    alert(`Donation Successfull, Thank you!`);
+
+    this.props.navigation.navigate("WalletScreen");
   };
   handlePayment = async () => {
     this.setState({
       loading: true
     });
-    let body = {
-      username: "darksun27",
-      mobile_number: "9810866770",
-      card_details: "5321532153215321",
-      amount: this.state.amount,
-      vendor_id: this.state.vendor_id || data
-    };
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    };
-    console.log(querystring.stringify(body));
-    let res_history = await axios.post(
-      "https://sih-aai-payment.herokuapp.com/api/spend",
-      querystring.stringify(body),
-      config
+    console.log(
+      "https://stormy-reaches-07388.herokuapp.com/transaction?id=dfbsidfbiaubib282fiwsbdff&amount=" +
+        this.state.amount
     );
-    console.log(res_history.data);
+    let res_history = await axios.get(
+      "https://stormy-reaches-07388.herokuapp.com/transaction?id=dfbsidfbiaubib282fiwsbdff&amount=" +
+        this.state.amount
+    );
     this.setState({ loading: false });
     alert(`Payment Successfull`);
-    this.props.navigation.navigate("Wallet");
+
+    this.props.navigation.navigate("WalletScreen");
   };
 
   render() {
@@ -142,21 +123,6 @@ export default class App extends React.Component {
           </Text>
           <TextInput
             underlineColorAndroid="transparent"
-            placeholder="+91 Enter Mobile Number"
-            placeholderTextColor="grey"
-            keyboardType="numeric"
-            onChangeText={vendor_id => this.setState({ vendor_id })}
-            style={{
-              fontWeight: "700",
-              borderRadius: 20,
-              height: 50,
-              paddingHorizontal: 20,
-              fontSize: 20,
-              marginTop: 20
-            }}
-          />
-          <TextInput
-            underlineColorAndroid="transparent"
             placeholder="Enter Amount"
             placeholderTextColor="grey"
             keyboardType="numeric"
@@ -197,7 +163,7 @@ export default class App extends React.Component {
             width
           }}
         >
-          Scan Paytm, UPI, or any other QR Code
+          Scan your Crypto Wallet QR
         </Text>
         <View
           style={{

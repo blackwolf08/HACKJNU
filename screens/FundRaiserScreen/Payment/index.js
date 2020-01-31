@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   Dimensions
 } from "react-native";
+import * as BackgroundFetch from "expo-background-fetch";
 import { LinearGradient } from "expo-linear-gradient";
 import Constants from "expo-constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -24,6 +25,30 @@ export default class index extends Component {
     loading: true,
     res_history: null
   };
+
+  update = async () => {
+    let res = await axios.get(
+      "https://stormy-reaches-07388.herokuapp.com/getbalance"
+    );
+    let res_history = await axios.get(
+      "https://stormy-reaches-07388.herokuapp.com/history"
+    );
+
+    let data = [];
+    Object.keys(res_history.data).forEach(key => {
+      data.push({
+        amount: res_history.data[key].details.from,
+        given_to: res_history.data[key].details.to,
+        type: res_history.data[key].details.status
+      });
+    });
+    console.log("updating");
+    this.setState({
+      money: res.data.balance,
+      loading: false,
+      res_history: data
+    });
+  };
   async componentDidMount() {
     this.setState({
       loading: true
@@ -35,11 +60,11 @@ export default class index extends Component {
     let res_history = await axios.get(
       "https://stormy-reaches-07388.herokuapp.com/history"
     );
-    console.log(res.data.balance);
-    // console.log(res_history.data);
+    setInterval(() => {
+      this.update();
+    }, 10000);
     let data = [];
     Object.keys(res_history.data).forEach(key => {
-      console.log(res_history.data[key].details);
       data.push({
         amount: res_history.data[key].details.from,
         given_to: res_history.data[key].details.to,

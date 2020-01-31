@@ -28,7 +28,7 @@ export default class FundRaiserScreen extends Component {
     this.setState({
       loading: true
     });
-    console.log("hello");
+
     let name = [];
     let amount = [];
     let current = [];
@@ -44,7 +44,7 @@ export default class FundRaiserScreen extends Component {
       doctor.push(res.data[data].details.doctor);
       cancer.push(res.data[data].details.stage);
     });
-    console.log(doctor);
+
     this.setState({
       name: name,
       amount: amount,
@@ -53,8 +53,6 @@ export default class FundRaiserScreen extends Component {
       cancerStage: cancer,
       loading: false
     });
-    console.log(this.state.cancerStage);
-    console.log(this.state.current);
   }
   render() {
     return (
@@ -64,7 +62,7 @@ export default class FundRaiserScreen extends Component {
           {!this.state.loading &&
             this.state.name.map((e, i) => {
               return (
-                <View>
+                <View key={i}>
                   <View
                     style={{
                       backgroundColor: "#f9f9f9",
@@ -178,7 +176,11 @@ export default class FundRaiserScreen extends Component {
                         </Text>
                       </ProgressCircle>
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.props.navigation.navigate("LiquidSwipe");
+                      }}
+                    >
                       <Text
                         style={{
                           alignItems: "center",
