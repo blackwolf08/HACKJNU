@@ -16,6 +16,15 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "android": {
+      "package": "com.hackjnu.parth",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAAVjMWwEOYH6d9WAzvc0ZQ_5Sfxm2ZO6M"
+        }
+      }
+    },
+
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
