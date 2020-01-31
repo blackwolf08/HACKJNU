@@ -38,6 +38,7 @@ async function loadResourcesAsync() {
       require("./assets/images/cancer.png"),
       require("./assets/images/doctor.jpg"),
       require("./screens/LiquidSwipe/assets/canc_1.gif"),
+      require("./assets/images/gif_15.gif"),
       require("./screens/LiquidSwipe/assets/img1.png"),
       require("./assets/images/preview.png")
     ]),

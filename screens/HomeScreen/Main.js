@@ -426,3 +426,7 @@ export default class Main extends React.Component {
     );
   }
 }
+
+Main.navigationOptions = {
+  header: null
+};

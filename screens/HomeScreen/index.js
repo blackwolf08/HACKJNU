@@ -12,5 +12,5 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({});
 
 HomeScreen.navigationOptions = {
-  title: "Diabetic Retinopathy"
+  header: null
 };

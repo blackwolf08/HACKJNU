@@ -8,7 +8,9 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
-  Platform
+  Platform,
+  Animated,
+  Easing
 } from "react-native";
 import axios from "axios";
 import ProgressCircle from "react-native-progress-circle";
@@ -57,21 +59,57 @@ export default class FundRaiserScreen extends Component {
     });
   }
   render() {
+    if (this.state.loading) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <ActivityIndicator size="small" />
+        </View>
+      );
+    }
     return (
       <View>
-        <ScrollView>
-          {this.state.loading && <ActivityIndicator size="small" />}
+        <Image
+          style={{
+            height: HEIGHT * 0.35,
+            width: WIDTH,
+            position: "absolute"
+          }}
+          source={require("../../assets/images/gif_15.gif")}
+        />
+        <ScrollView
+          style={{
+            marginTop: HEIGHT * 0.3,
+            backgroundColor: "#fff",
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20
+          }}
+        >
           {!this.state.loading &&
             this.state.name.map((e, i) => {
               return (
-                <View key={i}>
+                <View
+                  style={{
+                    alignItems: "center",
+                    backgroundColor: "#fff",
+                    borderTopLeftRadius: 20,
+                    borderTopRightRadius: 20,
+                    opacity: this.state.scale
+                  }}
+                  key={i}
+                >
                   <View
                     style={{
                       backgroundColor: "#f9f9f9",
                       borderRadius: 20,
                       margin: 0.03 * HEIGHT,
                       height: 0.4 * HEIGHT,
-                      width: 0.9 * WIDTH,
+                      width: 0.8 * WIDTH,
                       shadowColor: "#000",
                       shadowOffset: {
                         width: 0,
@@ -195,7 +233,7 @@ export default class FundRaiserScreen extends Component {
                           color: "white",
                           backgroundColor: "#404040",
                           borderRadius: 10,
-                          marginLeft: WIDTH * 0.23,
+                          marginLeft: WIDTH * 0.16,
                           marginTop: 30,
                           marginBottom: 15
                         }}
@@ -247,5 +285,5 @@ export default class FundRaiserScreen extends Component {
 const styles = StyleSheet.create({});
 
 FundRaiserScreen.navigationOptions = {
-  title: "Fund Raiser"
+  header: null
 };
