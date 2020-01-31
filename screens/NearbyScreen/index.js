@@ -63,7 +63,7 @@ export default class NearbyScreen extends Component {
     let phone = [];
     await axios
       .get(
-        "https://api.betterdoctor.com/2016-03-01/practices?location=37.773%2C-122.413%2C100&user_location=37.773%2C-122.413&skip=6&limit=5&user_key=2738dd76528bfc2c03a57c9f752e508e"
+        "https://api.betterdoctor.com/2016-03-01/practices?location=37.773%2C-122.413%2C100&user_location=37.773%2C-122.413&skip=6&limit=10&user_key=2738dd76528bfc2c03a57c9f752e508e"
       )
       .then(function(response) {
         console.log(
@@ -195,7 +195,7 @@ export default class NearbyScreen extends Component {
                 <Text
                   style={{
                     marginTop: 15,
-                    height: 40,
+                    height: 39,
                     width: WIDTH / 3
                   }}
                 >
