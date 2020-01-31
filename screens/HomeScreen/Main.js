@@ -11,6 +11,7 @@ import {
   SafeAreaView
 } from "react-native";
 import { EvilIcons, Ionicons } from "@expo/vector-icons";
+import chat from "../../assets/images/chat.png";
 
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
@@ -369,6 +370,7 @@ export default class Main extends React.Component {
                     </Text>
                   </TouchableOpacity>
                 )}
+
                 {this.state.data && (
                   <TouchableOpacity
                     onPress={() => this._handlePressButtonAsync()}

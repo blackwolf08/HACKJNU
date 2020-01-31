@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import ProgressCircle from "react-native-progress-circle";
 import cancer from "../../assets/images/cancer.png";
+import chat from "../../assets/images/chat.png";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -172,7 +173,7 @@ export default class FundRaiserScreen extends Component {
                         bgColor="#fff"
                       >
                         <Text style={{ fontSize: 18 }}>
-                          {this.state.current[i]}%
+                          {parseInt(this.state.current[i])}%
                         </Text>
                       </ProgressCircle>
                     </View>
@@ -206,6 +207,37 @@ export default class FundRaiserScreen extends Component {
               );
             })}
         </ScrollView>
+        {!this.state.loading && (
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              right: 15,
+              bottom: 15,
+              height: 70,
+              width: 70,
+              zIndex: 5,
+              backgroundColor: "#f9f9f9",
+              padding: 10,
+              borderRadius: 50,
+              shadowColor: "black",
+              shadowOpacity: 0.26,
+              shadowOffset: { width: 0, height: 4 },
+              shadowRadius: 10,
+              elevation: 3,
+              backgroundColor: "#fff"
+            }}
+          >
+            <Image
+              style={{
+                resizeMode: "contain",
+                flex: 1,
+                height: null,
+                width: null
+              }}
+              source={chat}
+            />
+          </TouchableOpacity>
+        )}
       </View>
     );
   }
