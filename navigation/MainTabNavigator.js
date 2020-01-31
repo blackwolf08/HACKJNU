@@ -8,6 +8,7 @@ import HomeScreen from "../screens/HomeScreen";
 import FundRaiserScreen from "../screens/FundRaiserScreen";
 import NearbyScreen from "../screens/NearbyScreen";
 import Details from "../screens/HomeScreen/Details";
+import LiquidSwipe from "../screens/LiquidSwipe";
 
 const config = Platform.select({
   web: { headerMode: "screen" },
@@ -31,7 +32,8 @@ HomeStack.path = "";
 
 const FundRaiserStack = createStackNavigator(
   {
-    FundRaiser: FundRaiserScreen
+    FundRaiser: FundRaiserScreen,
+    LiquidSwipe: LiquidSwipe
   },
   config
 );

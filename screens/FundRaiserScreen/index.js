@@ -144,7 +144,11 @@ export default class FundRaiserScreen extends Component {
                   <Text style={{ fontSize: 18 }}>{"37%"}</Text>
                 </ProgressCircle>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate("LiquidSwipe");
+                }}
+              >
                 <Text
                   style={{
                     alignItems: "center",

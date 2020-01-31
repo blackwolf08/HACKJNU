@@ -154,6 +154,7 @@ export default class NearbyScreen extends Component {
           {this.state.location.map((e, i) => {
             return (
               <View
+                key={i}
                 style={{
                   backgroundColor: "#f9f9f9",
                   height: HEIGHT / 5,
