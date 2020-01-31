@@ -53,8 +53,11 @@ export default class NearbyScreen extends Component {
       });
     }
 
-    let location = await Location.getCurrentPositionAsync({});
-    this.setState({ location });
+    if (Platform.OS == "ios") {
+    } else {
+      let location = await Location.getCurrentPositionAsync({});
+      this.setState({ location });
+    }
   };
   getDoctors = async () => {
     console.log("hello");
@@ -164,11 +167,11 @@ export default class NearbyScreen extends Component {
                   shadowColor: "#000",
                   shadowOffset: {
                     width: 0,
-                    height: 12
+                    height: Platform.OS == "android" ? 12 : 4
                   },
-                  shadowOpacity: 0.58,
+                  shadowOpacity: Platform.OS == "android" ? 0.58 : 0.3,
 
-                  shadowRadius: 16.0,
+                  shadowRadius: Platform.OS == "android" ? 16.0 : 4,
                   elevation: 24
                 }}
               >

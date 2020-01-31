@@ -34,6 +34,11 @@ async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
       require("./assets/images/wait.gif"),
+      require("./assets/images/chat.png"),
+      require("./assets/images/cancer.png"),
+      require("./assets/images/doctor.jpg"),
+      require("./screens/LiquidSwipe/assets/canc_1.gif"),
+      require("./screens/LiquidSwipe/assets/img1.png"),
       require("./assets/images/preview.png")
     ]),
     Font.loadAsync({

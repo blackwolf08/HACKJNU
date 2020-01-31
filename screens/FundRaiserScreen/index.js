@@ -7,7 +7,8 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from "react-native";
 import axios from "axios";
 import ProgressCircle from "react-native-progress-circle";
@@ -74,11 +75,11 @@ export default class FundRaiserScreen extends Component {
                       shadowColor: "#000",
                       shadowOffset: {
                         width: 0,
-                        height: 12
+                        height: Platform.OS == "android" ? 12 : 4
                       },
-                      shadowOpacity: 0.58,
+                      shadowOpacity: Platform.OS == "android" ? 0.58 : 0.3,
 
-                      shadowRadius: 16.0,
+                      shadowRadius: Platform.OS == "android" ? 16.0 : 4,
                       elevation: 24
                     }}
                   >
