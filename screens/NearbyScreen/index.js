@@ -196,8 +196,9 @@ export default class NearbyScreen extends Component {
                 <Text
                   style={{
                     marginTop: 15,
-                    height: 39,
-                    width: WIDTH / 3
+                    height: 35,
+                    width: WIDTH / 3,
+                    textAlign: "center"
                   }}
                 >
                   <Text
