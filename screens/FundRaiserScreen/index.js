@@ -9,10 +9,14 @@ import {
   TouchableOpacity,
   ActivityIndicator
 } from "react-native";
+import WebView from "react-native-webview";
 import axios from "axios";
 import ProgressCircle from "react-native-progress-circle";
+import { Overlay } from "react-native-elements";
+
 import cancer from "../../assets/images/cancer.png";
 import chat from "../../assets/images/chat.png";
+import { KeyboardAvoidingView } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -23,7 +27,11 @@ export default class FundRaiserScreen extends Component {
     current: [],
     doctor: [],
     cancerStage: [],
-    loading: true
+    loading: true,
+    chat: false
+  };
+  assistant = () => {
+    this.setState((prevState, props) => ({ chat: !prevState.chat }));
   };
   async componentDidMount() {
     this.setState({
@@ -207,8 +215,42 @@ export default class FundRaiserScreen extends Component {
               );
             })}
         </ScrollView>
+        <Overlay
+          onBackdropPress={() =>
+            this.setState((prevState, props) => ({ chat: !prevState.chat }))
+          }
+          style={{
+            height: 0.6 * HEIGHT,
+            width: 0.7 * WIDTH
+          }}
+          isVisible={this.state.chat}
+        >
+          <KeyboardAvoidingView
+            style={{
+              flex: 1
+            }}
+            behavior="height"
+          >
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: "#f9f9f9"
+              }}
+            >
+              <WebView
+                source={{
+                  uri:
+                    "https://app.engati.com/static/standalone/bot.html?bot_key=1ec8dd36fe854f34&debug=true"
+                }}
+                style={{ flex: 1 }}
+              />
+            </View>
+          </KeyboardAvoidingView>
+        </Overlay>
+
         {!this.state.loading && (
           <TouchableOpacity
+            onPress={() => this.assistant()}
             style={{
               position: "absolute",
               right: 15,

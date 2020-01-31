@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   Image,
   Linking,
-  Platform
+  Platform,
+  ActivityIndicator
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import Constants from "expo-constants";
@@ -33,7 +34,8 @@ export default class NearbyScreen extends Component {
     errorMessage: null,
     doctorNames: [],
     phoneNumbers: [],
-    location: []
+    location: [],
+    loading: false
   };
   componentDidMount() {
     if (Platform.OS === "android" && !Constants.isDevice) {
@@ -57,6 +59,9 @@ export default class NearbyScreen extends Component {
     this.setState({ location });
   };
   getDoctors = async () => {
+    this.setState({
+      loading: true
+    });
     console.log("hello");
     let names = [];
     let address = [];
@@ -90,7 +95,8 @@ export default class NearbyScreen extends Component {
     this.setState({
       doctorNames: names,
       phoneNumbers: phone,
-      location: address
+      location: address,
+      loading: false
     });
     console.log(this.state.doctorNames);
     console.log(this.state.phoneNumbers);
@@ -150,6 +156,7 @@ export default class NearbyScreen extends Component {
             Find Doctors
           </Text>
         </TouchableOpacity>
+        {this.state.loading && <ActivityIndicator size="small" />}
         <ScrollView horizontal={true}>
           {this.state.location.map((e, i) => {
             return (
