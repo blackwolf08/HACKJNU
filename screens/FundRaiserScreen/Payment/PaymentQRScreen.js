@@ -5,14 +5,15 @@ import {
   StyleSheet,
   TextInput,
   BackHandler,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import axios from "axios";
 import querystring from "querystring";
 
-import { height, width } from "../../../constants";
-import { Button, Block, Input } from "../../../components";
+const { height, width } = Dimensions.get("window");
+import Button from "./Button";
 
 export default class App extends React.Component {
   state = {
@@ -218,3 +219,7 @@ export default class App extends React.Component {
     );
   }
 }
+
+App.navigationOptions = {
+  header: null
+};

@@ -15,7 +15,6 @@ import Constants from "expo-constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ListItem } from "react-native-elements";
 import axios from "axios";
-import querystring from "querystring";
 
 const { height, width } = Dimensions.get("window");
 
@@ -29,32 +28,28 @@ export default class index extends Component {
     this.setState({
       loading: true
     });
-    let body = {
-      username: "darksun27",
-      mobile_number: "9810866770",
-      card_details: "5321532153215321",
-      amount: "400",
-      vendor_id: "1234"
-    };
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    };
-    let res = await axios.post(
-      "https://sih-aai-payment.herokuapp.com/api/get-wallet-details",
-      querystring.stringify(body),
-      config
+
+    let res = await axios.get(
+      "https://stormy-reaches-07388.herokuapp.com/getbalance"
     );
-    let res_history = await axios.post(
-      "https://sih-aai-payment.herokuapp.com/api/get-history",
-      querystring.stringify(body),
-      config
+    let res_history = await axios.get(
+      "https://stormy-reaches-07388.herokuapp.com/history"
     );
+    console.log(res.data.balance);
+    // console.log(res_history.data);
+    let data = [];
+    Object.keys(res_history.data).forEach(key => {
+      console.log(res_history.data[key].details);
+      data.push({
+        amount: res_history.data[key].details.from,
+        given_to: res_history.data[key].details.to,
+        type: res_history.data[key].details.status
+      });
+    });
     this.setState({
-      money: res.data.wallet,
+      money: res.data.balance,
       loading: false,
-      res_history: res_history.data.history
+      res_history: data
     });
   }
   render() {
@@ -163,7 +158,9 @@ export default class index extends Component {
                     shadowOpacity: 0.2,
                     borderRadius: 30
                   }}
-                  onPress={() => this.props.navigation.navigate("Payment")}
+                  onPress={() =>
+                    this.props.navigation.navigate("PaymentQRScreen")
+                  }
                 >
                   <Ionicons
                     style={{
@@ -251,13 +248,13 @@ export default class index extends Component {
                   subtitle={`₹${item.amount}`}
                   title={`${item.given_to}`}
                   leftIcon={{
-                    name: item.type == "ADD" ? "add" : "remove",
-                    color: item.type == "ADD" ? "green" : "red"
+                    name: item.type == false ? "add" : "remove",
+                    color: item.type == false ? "green" : "red"
                   }}
                   bottomDivider
                   chevron
                   subtitleStyle={{
-                    color: item.type == "ADD" ? "green" : "red",
+                    color: item.type == false ? "green" : "red",
                     fontFamily: "monti"
                   }}
                   titleStyle={{
@@ -275,5 +272,9 @@ export default class index extends Component {
     );
   }
 }
+
+index.navigationOptions = {
+  header: null
+};
 
 const styles = StyleSheet.create({});

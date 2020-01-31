@@ -112,8 +112,7 @@ const index = props => {
       <LinearGradient colors={["#ffffff00", "transparent"]}>
         <TouchableOpacity
           onPress={() => {
-            props.navigation.navigate("Saved");
-            console.log(props);
+            props.navigation.navigate("WalletScreen");
           }}
         >
           <Text
