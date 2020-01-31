@@ -17,7 +17,7 @@ import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 import * as FileSystem from "expo-file-system";
 import axios from "axios";
-import imagePlaceholder from "../../assets/images/preview.png";
+import imagePlaceholder from "../../assets/images/preview.jpg";
 import wait from "../../assets/images/wait.gif";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -264,7 +264,8 @@ export default class Main extends React.Component {
                         height: "100%",
                         position: "absolute",
                         borderRadius: 20,
-                        opacity: 0.5
+                        opacity: 0.5,
+                        resizeMode: "cover"
                       }}
                       source={imagePlaceholder}
                     ></Image>
