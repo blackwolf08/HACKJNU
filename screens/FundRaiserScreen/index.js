@@ -195,7 +195,7 @@ export default class FundRaiserScreen extends Component {
                           color: "white",
                           backgroundColor: "#404040",
                           borderRadius: 10,
-                          marginLeft: WIDTH - 300,
+                          marginLeft: WIDTH * 0.23,
                           marginTop: 30,
                           marginBottom: 15
                         }}
