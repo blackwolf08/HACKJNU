@@ -26,7 +26,7 @@ MAA (Maternal Assistance App) developed by Hypertext Assassins is specially desi
 # Open Charity for yourself
 - Need funds? Cancer positive? Worry not ask for community support within the app.
 
-# Blockchain
+# MATIC | Blockchain
 
 - Used MATIC network to implement wallet for secure and transparent payments so that each and every person can view thier donation channeling!
 - Complete display of all the relevant transaction on the channel for transparent usage.
