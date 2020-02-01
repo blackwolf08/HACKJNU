@@ -43,7 +43,7 @@ export default class Main extends React.Component {
     scan: false,
     img: null,
     report: null,
-    url: "http://ec725645.ngrok.io",
+    url: "http://13.92.84.245",
     reportImage: null
   };
 
