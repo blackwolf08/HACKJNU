@@ -12,7 +12,7 @@ import {
   Platform,
   ActivityIndicator
 } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Constants from "expo-constants";
 import axios from "axios";
 import * as Location from "expo-location";
@@ -35,32 +35,40 @@ export default class NearbyScreen extends Component {
     doctorNames: [],
     phoneNumbers: [],
     location: [],
-    loading: false
+    loading: false,
+    marker: {
+      latitude: 28.5212,
+      longitude: 77.179
+    },
+    marker2: {
+      latitude: 27.5212,
+      longitude: 77.009
+    }
   };
-  componentDidMount() {
-    if (Platform.OS === "android" && !Constants.isDevice) {
-      this.setState({
-        errorMessage:
-          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
-      });
-    } else {
-      this._getLocationAsync();
-    }
-  }
-  _getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== "granted") {
-      this.setState({
-        errorMessage: "Permission to access location was denied"
-      });
-    }
+  // componentDidMount() {
+  //   if (Platform.OS === "android" && !Constants.isDevice) {
+  //     this.setState({
+  //       errorMessage:
+  //         "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
+  //     });
+  //   } else {
+  //     this._getLocationAsync();
+  //   }
+  // }
+  // _getLocationAsync = async () => {
+  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+  //   if (status !== "granted") {
+  //     this.setState({
+  //       errorMessage: "Permission to access location was denied"
+  //     });
+  //   }
 
-    if (Platform.OS == "ios") {
-    } else {
-      let location = await Location.getCurrentPositionAsync({});
-      this.setState({ location });
-    }
-  };
+  //   if (Platform.OS == "ios") {
+  //   } else {
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     this.setState({ location });
+  //   }
+  // };
   getDoctors = async () => {
     this.setState({
       loading: true
@@ -106,12 +114,12 @@ export default class NearbyScreen extends Component {
     console.log(this.state.location);
   };
   render() {
-    let text = "Waiting..";
-    if (this.state.errorMessage) {
-      text = this.state.errorMessage;
-    } else if (this.state.location) {
-      text = JSON.stringify(this.state.location);
-    }
+    // let text = "Waiting..";
+    // if (this.state.errorMessage) {
+    //   text = this.state.errorMessage;
+    // } else if (this.state.location) {
+    //   text = JSON.stringify(this.state.location);
+    // }
     return (
       <View>
         <View>
@@ -121,13 +129,15 @@ export default class NearbyScreen extends Component {
               height: 40,
               borderColor: "gray",
               borderWidth: 1,
-              borderRadius: 20,
+              borderRadius: 10,
+              padding: 5,
               color: "black",
-              marginTop: 5,
+              marginTop: 0.01 * HEIGHT,
               marginBottom: 7,
-              paddingLeft: 8,
-              marginLeft: 5,
-              marginRight: 5
+
+              marginLeft: 0.05 * WIDTH,
+
+              width: 0.9 * WIDTH
             }}
             editable={true}
             onChangeText={text => this.setState({ text })}
@@ -151,7 +161,7 @@ export default class NearbyScreen extends Component {
               color: "white",
               backgroundColor: "#404040",
               borderRadius: 10,
-              marginLeft: WIDTH - 315,
+              marginLeft: WIDTH * 0.203,
               marginTop: 10,
               marginBottom: 15
             }}
@@ -254,7 +264,18 @@ export default class NearbyScreen extends Component {
             provider={PROVIDER_GOOGLE}
             region={this.state.region}
             style={styles.mapStyle}
-          />
+          >
+            <Marker
+              coordinate={this.state.marker}
+              title="hello"
+              description="hello"
+            />
+            <Marker
+              coordinate={this.state.marker2}
+              title="hello"
+              description="hello"
+            />
+          </MapView>
         </View>
       </View>
     );
@@ -269,7 +290,7 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height / 2
+    height: Dimensions.get("window").height * 0.75
   }
 });
 
