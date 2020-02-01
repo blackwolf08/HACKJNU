@@ -4,7 +4,11 @@ This is the official code repository for Hypertext Assassins . This type of appl
 1. [Sunny Dhama](https://github.com/blackwolf08)
 2. [Parth Chandna](https://github.com/pchandna24) 
 
-<img height="250" width="auto" src="https://raw.githubusercontent.com/blackwolf08/HACKJNU/master/gifs/IMG_1785.gif" >
+<img height="500" width="auto" src="https://raw.githubusercontent.com/blackwolf08/HACKJNU/master/gifs/IMG_1785.gif" >
+
+<img height="500" width="auto" src="<img height="500" width="auto" src="https://raw.githubusercontent.com/blackwolf08/HACKJNU/master/gifs/IMG_1785.gif" >
+
+<img height="500" width="auto" src="<img height="500" width="auto" src="https://raw.githubusercontent.com/blackwolf08/HACKJNU/master/gifs/unnamed.gif" >
 
 
 # Diabetic Retinopathy App :heart_symbol:
