@@ -43,7 +43,7 @@ export default class Main extends React.Component {
     scan: false,
     img: null,
     report: null,
-    url: "http://28f1d071.ngrok.io",
+    url: "http://ec725645.ngrok.io",
     reportImage: null
   };
 
@@ -167,250 +167,261 @@ export default class Main extends React.Component {
       );
     }
     return (
-      <ScrollView>
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <SafeAreaView>
-            <KeyboardAvoidingView
-              behavior="position"
-              keyboardVerticalOffset={keyboardVerticalOffset}
+      <SafeAreaView>
+        <ScrollView>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "#fff",
+                height: HEIGHT - 100,
+                width: WIDTH - 50,
+                borderRadius: 20,
+                alignItems: "center",
+                justifyContent: "space-around",
+                position: "relative"
+              }}
             >
-              <View
+              {!this.state.data && (
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 24,
+                    textAlign: "center"
+                  }}
+                >
+                  Upload your Angiography Image
+                </Text>
+              )}
+              {this.state.data && (
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 24,
+                    textAlign: "center"
+                  }}
+                >
+                  Report
+                </Text>
+              )}
+
+              {!this.state.data && (
+                <TextInput
+                  placeholder="Enter your Name"
+                  style={{
+                    height: 50,
+                    width: WIDTH - 100,
+                    borderWidth: 0,
+                    textAlign: "center",
+                    color: "black",
+                    backgroundColor: "#fff",
+                    borderBottomColor: "#d9d9d9",
+                    borderBottomWidth: 1,
+                    shadowColor: "black",
+                    shadowOpacity: 0.26,
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowRadius: 10,
+                    elevation: 3,
+                    backgroundColor: "#fff",
+                    borderRadius: 5
+                  }}
+                  onChangeText={text => this.setState({ text: text })}
+                />
+              )}
+              <TouchableOpacity
                 style={{
-                  backgroundColor: "#fff",
-                  height: HEIGHT - 100,
-                  width: WIDTH - 50,
-                  borderRadius: 20,
+                  width: WIDTH - 100,
+                  height: 150,
+                  justifyContent: "flex-start",
                   alignItems: "center",
-                  justifyContent: "space-around",
+                  opacity: 1,
+                  borderRadius: 20,
                   position: "relative"
                 }}
+                onPress={() => this._pickImage()}
               >
-                {!this.state.data && (
-                  <Text
+                {this.state.image && (
+                  <Image
                     style={{
-                      fontWeight: "bold",
-                      fontSize: 24,
-                      textAlign: "center"
+                      width: "100%",
+                      height: "100%",
+                      position: "absolute",
+                      borderRadius: 20,
+                      opacity: 0.5
                     }}
-                  >
-                    Upload your Angiography Image
-                  </Text>
+                    source={{ uri: this.state.image }}
+                  ></Image>
                 )}
+                {!this.state.image && (
+                  <Image
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      position: "absolute",
+                      borderRadius: 20,
+                      opacity: 0.5,
+                      resizeMode: "cover"
+                    }}
+                    source={imagePlaceholder}
+                  ></Image>
+                )}
+
                 {this.state.data && (
                   <Text
                     style={{
+                      color: "black",
+                      backgroundColor: "#ffffff99",
+                      fontFamily: "Roboto",
+                      textAlign: "center",
+                      width: WIDTH - 100,
+                      height: 40,
+                      textAlignVertical: "center",
                       fontWeight: "bold",
-                      fontSize: 24,
-                      textAlign: "center"
+                      opacity: 1
                     }}
                   >
-                    Report
+                    Uploaded Image
                   </Text>
                 )}
-
                 {!this.state.data && (
-                  <TextInput
-                    placeholder="Enter your Name"
+                  <Text
                     style={{
-                      height: 50,
-                      width: WIDTH - 100,
-                      borderWidth: 0,
-                      textAlign: "center",
                       color: "black",
-                      backgroundColor: "#fff",
-                      borderBottomColor: "#d9d9d9",
-                      borderBottomWidth: 1,
-                      shadowColor: "black",
-                      shadowOpacity: 0.26,
-                      shadowOffset: { width: 0, height: 4 },
-                      shadowRadius: 10,
-                      elevation: 3,
-                      backgroundColor: "#fff",
-                      borderRadius: 5
+                      backgroundColor: "#ffffff99",
+                      fontFamily: "Roboto",
+                      textAlign: "center",
+                      width: WIDTH - 100,
+                      height: 40,
+                      textAlignVertical: "center",
+                      fontWeight: "bold",
+                      opacity: 1
                     }}
-                    onChangeText={text => this.setState({ text: text })}
-                  />
+                  >
+                    {this.state.image
+                      ? "Tap to choose another Image"
+                      : "Tap Pick an Image from Camera Roll"}
+                  </Text>
                 )}
+              </TouchableOpacity>
+              {this.state.data && (
+                <View>
+                  <Text
+                    style={{
+                      textDecorationLine: "underline",
+                      fontWeight: "bold",
+                      fontSize: 22,
+                      textAlign: "left",
+                      marginBottom: 20,
+                      textAlign: "center",
+                      color: "#444"
+                    }}
+                  >
+                    Summary:
+                  </Text>
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: 18
+                    }}
+                  >{`Carcinogenic Eye : ${this.state.data.toFixed(2)}%`}</Text>
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: 18
+                    }}
+                  >
+                    Cancer Predicted :{" "}
+                    <Text
+                      style={{
+                        color: this.state.is_cancer == "true" ? "red" : "green"
+                      }}
+                    >
+                      {this.state.is_cancer == "true" ? "Yes" : "No"}
+                    </Text>
+                  </Text>
+                </View>
+              )}
+              {!this.state.data && (
+                <TouchableOpacity onPress={() => this.getReport()}>
+                  <Text
+                    style={{
+                      alignItems: "center",
+                      textAlign: "center",
+                      width: WIDTH - 100,
+                      fontWeight: "bold",
+                      fontSize: 15,
+                      height: 50,
+                      paddingTop: 15,
+                      color: "white",
+                      backgroundColor: "#404040",
+                      borderRadius: 10
+                    }}
+                  >
+                    Get Report
+                  </Text>
+                </TouchableOpacity>
+              )}
+              {this.state.data && (
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({
+                      text: null,
+                      data: null,
+                      type: "no-data",
+                      image: false,
+                      imageSelect: null,
+                      isUploading: false,
+                      mainImage: false,
+                      base64send: null,
+                      b64: null,
+                      loading: false,
+                      hasCameraPermission: null,
+                      scan: false,
+                      img: null,
+                      report: null
+                    });
+                  }}
+                >
+                  <Text>Try Again?</Text>
+                </TouchableOpacity>
+              )}
+              {this.state.data && (
                 <TouchableOpacity
                   style={{
-                    width: WIDTH - 100,
-                    height: 150,
-                    justifyContent: "flex-start",
+                    backgroundColor: "#eee",
+                    justifyContent: "center",
                     alignItems: "center",
-                    opacity: 1,
-                    borderRadius: 20,
-                    position: "relative"
+                    borderRadius: 20
                   }}
-                  onPress={() => this._pickImage()}
+                  onPress={() => {
+                    this.props.navigation.navigate("Report", {
+                      image: this.state.reportImage,
+                      cancer_prob: this.state.data,
+                      name: this.state.text
+                    });
+                  }}
                 >
-                  {this.state.image && (
-                    <Image
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        borderRadius: 20,
-                        opacity: 0.5
-                      }}
-                      source={{ uri: this.state.image }}
-                    ></Image>
-                  )}
-                  {!this.state.image && (
-                    <Image
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        borderRadius: 20,
-                        opacity: 0.5,
-                        resizeMode: "cover"
-                      }}
-                      source={imagePlaceholder}
-                    ></Image>
-                  )}
-
-                  {this.state.data && (
-                    <Text
-                      style={{
-                        color: "black",
-                        backgroundColor: "#ffffff99",
-                        fontFamily: "Roboto",
-                        textAlign: "center",
-                        width: WIDTH - 100,
-                        height: 40,
-                        textAlignVertical: "center",
-                        fontWeight: "bold",
-                        opacity: 1
-                      }}
-                    >
-                      Uploaded Image
-                    </Text>
-                  )}
-                  {!this.state.data && (
-                    <Text
-                      style={{
-                        color: "black",
-                        backgroundColor: "#ffffff99",
-                        fontFamily: "Roboto",
-                        textAlign: "center",
-                        width: WIDTH - 100,
-                        height: 40,
-                        textAlignVertical: "center",
-                        fontWeight: "bold",
-                        opacity: 1
-                      }}
-                    >
-                      {this.state.image
-                        ? "Tap to choose another Image"
-                        : "Tap Pick an Image from Camera Roll"}
-                    </Text>
-                  )}
-                </TouchableOpacity>
-                {this.state.data && (
-                  <View>
-                    <Text
-                      style={{
-                        textDecorationLine: "underline",
-                        fontWeight: "bold",
-                        fontSize: 22,
-                        textAlign: "left",
-                        marginBottom: 20,
-                        textAlign: "center",
-                        color: "#444"
-                      }}
-                    >
-                      Summary:
-                    </Text>
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: 18
-                      }}
-                    >{`Carcinogenic Eye : ${this.state.data.toFixed(
-                      2
-                    )}%`}</Text>
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: 18
-                      }}
-                    >
-                      Cancer Predicted :{" "}
-                      <Text
-                        style={{
-                          color:
-                            this.state.is_cancer == "true" ? "red" : "green"
-                        }}
-                      >
-                        {this.state.is_cancer == "true" ? "Yes" : "No"}
-                      </Text>
-                    </Text>
-                  </View>
-                )}
-                {!this.state.data && (
-                  <TouchableOpacity onPress={() => this.getReport()}>
-                    <Text
-                      style={{
-                        alignItems: "center",
-                        textAlign: "center",
-                        width: WIDTH - 100,
-                        fontWeight: "bold",
-                        fontSize: 15,
-                        height: 50,
-                        paddingTop: 15,
-                        color: "white",
-                        backgroundColor: "#404040",
-                        borderRadius: 10
-                      }}
-                    >
-                      Get Report
-                    </Text>
-                  </TouchableOpacity>
-                )}
-
-                {this.state.data && (
-                  <Report
-                    image={this.state.reportImage}
-                    cancer_prob={this.state.data}
-                    name={this.state.text}
-                  />
-                )}
-
-                {this.state.data && (
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({
-                        text: null,
-                        data: null,
-                        type: "no-data",
-                        image: false,
-                        imageSelect: null,
-                        isUploading: false,
-                        mainImage: false,
-                        base64send: null,
-                        b64: null,
-                        loading: false,
-                        hasCameraPermission: null,
-                        scan: false,
-                        img: null,
-                        report: null
-                      });
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      alignSelf: "center",
+                      padding: 20,
+                      fontSize: 20
                     }}
                   >
-                    <Text>Try Again?</Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-            </KeyboardAvoidingView>
-          </SafeAreaView>
-        </View>
-      </ScrollView>
+                    View Report
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

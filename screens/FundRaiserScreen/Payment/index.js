@@ -184,7 +184,9 @@ export default class index extends Component {
                     borderRadius: 30
                   }}
                   onPress={() =>
-                    this.props.navigation.navigate("PaymentQRScreen")
+                    this.props.navigation.navigate("PaymentQRScreen", {
+                      key: this.props.navigation.getParam("key")
+                    })
                   }
                 >
                   <Ionicons

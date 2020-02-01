@@ -52,7 +52,9 @@ export default class App extends React.Component {
     console.log(type, data);
 
     let res_history = await axios.get(
-      "https://stormy-reaches-07388.herokuapp.com/transaction?id=dfbsidfbiaubib282fiwsbdff&amount=" +
+      "https://stormy-reaches-07388.herokuapp.com/transaction?id=" +
+        this.props.navigation.getParam("key") +
+        "&amount=" +
         this.state.amount +
         "200000"
     );
@@ -66,11 +68,15 @@ export default class App extends React.Component {
       loading: true
     });
     console.log(
-      "https://stormy-reaches-07388.herokuapp.com/transaction?id=dfbsidfbiaubib282fiwsbdff&amount=" +
+      "https://stormy-reaches-07388.herokuapp.com/transaction?id=" +
+        this.props.navigation.getParam("key") +
+        "&amount=" +
         this.state.amount
     );
     let res_history = await axios.get(
-      "https://stormy-reaches-07388.herokuapp.com/transaction?id=dfbsidfbiaubib282fiwsbdff&amount=" +
+      "https://stormy-reaches-07388.herokuapp.com/transaction?id=" +
+        this.props.navigation.getParam("key") +
+        "&amount=" +
         this.state.amount
     );
     this.setState({ loading: false });

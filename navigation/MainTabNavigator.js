@@ -11,6 +11,7 @@ import Details from "../screens/HomeScreen/Details";
 import LiquidSwipe from "../screens/LiquidSwipe";
 import WalletScreen from "../screens/FundRaiserScreen/Payment";
 import PaymentQRScreen from "../screens/FundRaiserScreen/Payment/PaymentQRScreen";
+import Report from "../screens/HomeScreen/Report";
 
 const config = Platform.select({
   web: { headerMode: "screen" },
@@ -20,7 +21,8 @@ const config = Platform.select({
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Details: Details
+    Details: Details,
+    Report: Report
   },
   config
 );

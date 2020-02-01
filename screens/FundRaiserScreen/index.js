@@ -10,7 +10,10 @@ import {
   ActivityIndicator,
   Platform,
   Animated,
-  Easing
+  Easing,
+  TouchableWithoutFeedback,
+  TouchableHighlight,
+  RefreshControl
 } from "react-native";
 import WebView from "react-native-webview";
 import axios from "axios";
@@ -31,10 +34,46 @@ export default class FundRaiserScreen extends Component {
     doctor: [],
     cancerStage: [],
     loading: true,
-    chat: false
+    chat: false,
+    objKeys: [],
+    refreshing: false
   };
   assistant = () => {
     this.setState((prevState, props) => ({ chat: !prevState.chat }));
+  };
+
+  onRefresh = async () => {
+    this.setState({
+      refreshing: true
+    });
+    let name = [];
+    let amount = [];
+    let current = [];
+    let doctor = [];
+    let cancer = [];
+    let objKeys = [];
+    let res = await axios.get(
+      "https://stormy-reaches-07388.herokuapp.com/fundraisers"
+    );
+    Object.keys(res.data).forEach(data => {
+      name.push(res.data[data].details.name);
+      amount.push(res.data[data].details.amount);
+      current.push(res.data[data].details.current);
+      doctor.push(res.data[data].details.doctor);
+      cancer.push(res.data[data].details.stage);
+      objKeys.push(data);
+    });
+
+    this.setState({
+      name: name,
+      amount: amount,
+      current: current,
+      doctor: doctor,
+      cancerStage: cancer,
+      loading: false,
+      objKeys,
+      refreshing: false
+    });
   };
   async componentDidMount() {
     this.setState({
@@ -46,6 +85,7 @@ export default class FundRaiserScreen extends Component {
     let current = [];
     let doctor = [];
     let cancer = [];
+    let objKeys = [];
     let res = await axios.get(
       "https://stormy-reaches-07388.herokuapp.com/fundraisers"
     );
@@ -55,6 +95,7 @@ export default class FundRaiserScreen extends Component {
       current.push(res.data[data].details.current);
       doctor.push(res.data[data].details.doctor);
       cancer.push(res.data[data].details.stage);
+      objKeys.push(data);
     });
 
     this.setState({
@@ -63,7 +104,8 @@ export default class FundRaiserScreen extends Component {
       current: current,
       doctor: doctor,
       cancerStage: cancer,
-      loading: false
+      loading: false,
+      objKeys
     });
   }
   render() {
@@ -91,9 +133,15 @@ export default class FundRaiserScreen extends Component {
           source={require("../../assets/images/gif_15.gif")}
         />
         <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
           style={{
             marginTop: HEIGHT * 0.3,
-            backgroundColor: "#fff",
+            backgroundColor: "#f9f9f9",
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20
           }}
@@ -104,7 +152,7 @@ export default class FundRaiserScreen extends Component {
                 <View
                   style={{
                     alignItems: "center",
-                    backgroundColor: "#fff",
+                    backgroundColor: "#f9f9f9",
                     borderTopLeftRadius: 20,
                     borderTopRightRadius: 20,
                     opacity: this.state.scale
@@ -151,58 +199,62 @@ export default class FundRaiserScreen extends Component {
                     >
                       <Text
                         style={{
-                          fontSize: 22,
-                          fontWeight: "bold"
+                          fontSize: 15,
+                          fontWeight: "bold",
+                          color: "grey"
                         }}
                       >
-                        Name:
+                        Name
                       </Text>
-                      <Text style={{ fontSize: 20 }}>
-                        {" "}
-                        {this.state.name[i]}
-                      </Text>
+                    </Text>
+                    <Text style={{ fontSize: 20, marginLeft: 25 }}>
+                      {" "}
+                      {this.state.name[i]}
                     </Text>
                     <Text style={{ marginLeft: 0.04 * WIDTH }}>
                       <Text
                         style={{
-                          fontSize: 22,
-                          fontWeight: "bold"
+                          fontSize: 15,
+                          fontWeight: "bold",
+                          color: "grey"
                         }}
                       >
-                        Amount:
+                        Amount
                       </Text>
-                      <Text style={{ fontSize: 20 }}>
-                        {" "}
-                        {this.state.amount[i]}
-                      </Text>
+                    </Text>
+                    <Text style={{ fontSize: 20, marginLeft: 25 }}>
+                      {" "}
+                      {this.state.amount[i]}
                     </Text>
                     <Text style={{ marginLeft: 0.04 * WIDTH }}>
                       <Text
                         style={{
-                          fontSize: 22,
-                          fontWeight: "bold"
+                          fontSize: 15,
+                          fontWeight: "bold",
+                          color: "grey"
                         }}
                       >
-                        Doctor:
+                        Doctor
                       </Text>
-                      <Text style={{ fontSize: 20 }}>
-                        {" "}
-                        {this.state.doctor[i]}
-                      </Text>
+                    </Text>
+                    <Text style={{ fontSize: 20, marginLeft: 25 }}>
+                      {" "}
+                      {this.state.doctor[i]}
                     </Text>
                     <Text style={{ marginLeft: 0.04 * WIDTH }}>
                       <Text
                         style={{
-                          fontSize: 22,
-                          fontWeight: "bold"
+                          fontSize: 15,
+                          fontWeight: "bold",
+                          color: "grey"
                         }}
                       >
-                        Cancer Level:
+                        Cancer Stage
                       </Text>
-                      <Text style={{ fontSize: 20 }}>
-                        {" "}
-                        {this.state.cancerStage[i]}
-                      </Text>
+                    </Text>
+                    <Text style={{ fontSize: 20, marginLeft: 25 }}>
+                      {" "}
+                      {this.state.cancerStage[i]}
                     </Text>
                     <View
                       style={{
@@ -224,9 +276,15 @@ export default class FundRaiserScreen extends Component {
                         </Text>
                       </ProgressCircle>
                     </View>
-                    <TouchableOpacity
+                    <TouchableWithoutFeedback
+                      style={{
+                        zIndex: 3
+                      }}
                       onPress={() => {
-                        this.props.navigation.navigate("LiquidSwipe");
+                        console.log("object");
+                        this.props.navigation.navigate("LiquidSwipe", {
+                          key: this.state.objKeys[i]
+                        });
                       }}
                     >
                       <Text
@@ -241,14 +299,13 @@ export default class FundRaiserScreen extends Component {
                           color: "white",
                           backgroundColor: "#404040",
                           borderRadius: 10,
-                          marginLeft: WIDTH * 0.23,
-                          marginTop: 30,
-                          marginBottom: 15
+                          marginLeft: WIDTH * 0.4,
+                          marginTop: -50
                         }}
                       >
                         Donate
                       </Text>
-                    </TouchableOpacity>
+                    </TouchableWithoutFeedback>
                   </View>
                 </View>
               );
