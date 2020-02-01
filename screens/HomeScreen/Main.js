@@ -21,6 +21,7 @@ import axios from "axios";
 import imagePlaceholder from "../../assets/images/preview.jpg";
 import wait from "../../assets/images/wait.gif";
 import { ScrollView } from "react-native-gesture-handler";
+import Report from "./Report";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -42,7 +43,8 @@ export default class Main extends React.Component {
     scan: false,
     img: null,
     report: null,
-    url: "http://db6fc4ab.ngrok.io"
+    url: "http://28f1d071.ngrok.io",
+    reportImage: null
   };
 
   _handlePressButtonAsync = async () => {
@@ -82,9 +84,10 @@ export default class Main extends React.Component {
       let img = await FileSystem.readAsStringAsync(result.uri, {
         encoding: "base64"
       });
+      let reportImage = img;
       img = img.replace("data:image/jpeg;base64,", "");
       img = img.replace("data:image/jpg;base64,", "");
-      this.setState({ mainImage: true, image: result.uri, img });
+      this.setState({ mainImage: true, image: result.uri, img, reportImage });
     }
   };
 
@@ -110,11 +113,11 @@ export default class Main extends React.Component {
         andf = 100 - andf;
       }
       console.log(`${res.data.is_cancer}`, typeof `${res.data.is_cancer}`);
-      this.setState({
+      this.setState(() => ({
         data: andf,
         is_cancer: `${res.data.is_cancer}`,
         loading: false
-      });
+      }));
 
       // REQ Testing
 
@@ -372,26 +375,11 @@ export default class Main extends React.Component {
                 )}
 
                 {this.state.data && (
-                  <TouchableOpacity
-                    onPress={() => this._handlePressButtonAsync()}
-                  >
-                    <Text
-                      style={{
-                        alignItems: "center",
-                        textAlign: "center",
-                        width: WIDTH - 100,
-                        fontWeight: "bold",
-                        fontSize: 15,
-                        height: 50,
-                        paddingTop: 15,
-                        color: "white",
-                        backgroundColor: "#404040",
-                        borderRadius: 10
-                      }}
-                    >
-                      Download & View PDF
-                    </Text>
-                  </TouchableOpacity>
+                  <Report
+                    image={this.state.reportImage}
+                    cancer_prob={this.state.data}
+                    name={this.state.text}
+                  />
                 )}
 
                 {this.state.data && (

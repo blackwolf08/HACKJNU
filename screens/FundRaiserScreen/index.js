@@ -117,7 +117,7 @@ export default class FundRaiserScreen extends Component {
                       borderRadius: 20,
                       margin: 0.03 * HEIGHT,
                       height: 0.4 * HEIGHT,
-                      width: 0.8 * WIDTH,
+                      width: 0.9 * WIDTH,
                       shadowColor: "#000",
                       shadowOffset: {
                         width: 0,
@@ -241,7 +241,7 @@ export default class FundRaiserScreen extends Component {
                           color: "white",
                           backgroundColor: "#404040",
                           borderRadius: 10,
-                          marginLeft: WIDTH * 0.16,
+                          marginLeft: WIDTH * 0.23,
                           marginTop: 30,
                           marginBottom: 15
                         }}
@@ -277,6 +277,9 @@ export default class FundRaiserScreen extends Component {
               }}
             >
               <WebView
+                domStorageEnabled={false}
+                cacheEnabled={false}
+                cacheMode="LOAD_NO_CACHE"
                 source={{
                   uri:
                     "https://app.engati.com/static/standalone/bot.html?bot_key=1ec8dd36fe854f34&debug=true"
