@@ -10,7 +10,7 @@ This is the official code repository for Hypertext Assassins . This type of appl
 <img height="500" width="auto" width="auto" src="https://raw.githubusercontent.com/blackwolf08/HACKJNU/master/gifs/IMG_1785.gif" >
 <br />
 
-<img height="500" width="auto" src="<img height="500" width="auto" src="https://raw.githubusercontent.com/blackwolf08/HACKJNU/master/gifs/unnamed.gif" >
+<img height="500" width="auto" width="auto" src="https://raw.githubusercontent.com/blackwolf08/HACKJNU/master/gifs/unnamed.gif" >
 <br />
 
 
